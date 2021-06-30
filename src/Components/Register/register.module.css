@@ -1,0 +1,33 @@
+.register-form {    
+    max-width: 500px;
+    margin: 5% auto;    
+    background-color: #f2f2f2;
+}
+
+.register-form h4{
+    text-align: center;
+}
+
+button:disabled,
+button:disabled:hover,
+button:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.invalid {
+    background-color:#fddddd;
+    border-color:1px solid #b40e0e;
+}
+
+.invalid:focus{
+    background-color:#fbe8d2;
+    border-color:1px solid #ff8800;
+}
+
+.error_message {
+    color: maroon;
+    float: left;
+  }
