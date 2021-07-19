@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import classes from './login.module.css';
 import { useState } from 'react';
 
@@ -90,6 +91,8 @@ const Login = () => {
             {passwordInputIsInvalid && <p className={classes.error_message}>Password field should have at least 4 digit!</p> }
 
             <button disabled={!isFormValid} className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <br />
+            Don't have you account ? <Link to="/signup">Sign Up</Link> here!
         </form>
     );
 }

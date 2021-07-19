@@ -1,9 +1,12 @@
+import { Link } from 'react-router-dom';
 import { useState } from  'react';
 import useInput from '../../Hooks/use-input';
 import classes from './register.module.css';
 
 const Register = (props) => {
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const {
         value: enteredFirstName,
         hasInputError: hasInputFirstNameError,
@@ -55,8 +58,10 @@ const Register = (props) => {
     const submitHandler = async (event) => {
         event.preventDefault();
 
+        setIsLoading(true);
         if (hasInputFirstNameError || hasInputLastNameError || hasInputUsernameError) {
             isFormValid = false;
+            setIsLoading(false);
             return;
         }
 
@@ -83,9 +88,11 @@ const Register = (props) => {
             resetEmailHandler();
             resetAddressHandler();
             console.log('Form submitted!');
+            setIsLoading(false);
 
         } catch (error) {
             console.log(error.message);
+            setIsLoading(false);
         }
     }
 
@@ -185,16 +192,26 @@ const Register = (props) => {
             <div className="text-center">
                 <br />
                 <button disabled={!isFormValid ? true : false} className="btn btn-primary" type="submit">Sign Up</button>
+                <br /><br />
+                Already Have a account <Link to="/login"> Login </Link> here!
             </div>
         </form>
     );
+
+    const loaderDiv = (
+        <div className="text-center">        
+            <span className="">Loading...</span>
+        </div>
+    );
+
     return (
         <div className="container">
             <div className="row">
                 <div className={`col-md-9 form p-4 ${classes['register-form']}`}>
-                    <h4 className="mb-3">Sign Up</h4>
-                    {!isSubmitted && registrationForm}
-                    {isSubmitted && <div className="text-center">You have registered successfully! <br/> You can now <a href="#">Login</a> to access your account</div>}
+                    <h4 className="mb-3">Sign Up</h4>                    
+                    {isLoading && loaderDiv}
+                    { (!isLoading && !isSubmitted) && registrationForm}
+                    { (!isLoading && isSubmitted) && <div className="text-center">You have registered successfully! <br/> You can now <Link to="/login">Login</Link> to access your account</div>}
                 </div>
             </div>
         </div>
