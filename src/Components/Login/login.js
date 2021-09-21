@@ -1,9 +1,13 @@
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import classes from './login.module.css';
 import { useState } from 'react';
 
 const Login = () => {
     
+    const history = useHistory();      
+    const dispatch = useDispatch();
+
     const [enteredName, setEnteredName] = useState('');
     const [isNameTouched, setIsNameTouched] = useState(false);
     
@@ -16,14 +20,14 @@ const Login = () => {
     let passwordInputIsInvalid = isPasswordTouched && (enteredPassword.trim() === '' || enteredPassword.trim().length < 4);     
 
     let isFormValid = false;
-    console.log(!nameInputIsInvalid);
-    console.log(!passwordInputIsInvalid);
+    //console.log(!nameInputIsInvalid);
+    //console.log(!passwordInputIsInvalid);
     if (!nameInputIsInvalid && !passwordInputIsInvalid) {
         isFormValid = true;
     } else {
         isFormValid = false;
     }
-    console.log("form"+isFormValid);
+    //console.log("form "+isFormValid);
 
     const onNameFocusOut = (event) => {
         setEnteredName(event.target.value);
@@ -50,10 +54,21 @@ const Login = () => {
             return;
         }
         
+        
         setEnteredName('');
         setEnteredPassword('');
         setIsNameTouched(false);
         setIsPasswordTouched(false);        
+        
+        const userData = {
+            name : 'Riyaz',
+            sername : 'Patwegar'
+        }
+
+        dispatch({type:'login', value: userData});
+        localStorage.setItem('isLoggedIn', true);
+        console.log('******************************');
+        history.replace("/");
         console.log('Form submitted successfully!');
     }
 
